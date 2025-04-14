@@ -30,7 +30,7 @@ jobs:
 # dart run build_runner build --delete-conflicting-outputs
     - name: "Build Flutter APK Project"
       run: |
-        flutter build  apk -t lib/env/main_prod.dart  --release
+        flutter build  apk  --release
 
     - name: Push into Releases Tab
       uses: ncipollo/release-action@v1
