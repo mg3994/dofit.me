@@ -185,6 +185,9 @@ class _HomeScreenState extends State<HomeScreen> {
     const Center(
       child: Text('Centro Benessere', style: TextStyle(fontSize: 24)),
     ),
+    const Center(
+      child: Text('Video Guide', style: TextStyle(fontSize: 24)),
+    ),
   ];
 
   @override
