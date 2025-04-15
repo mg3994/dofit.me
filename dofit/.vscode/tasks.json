@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Generate l10n Files",
+        "type": "shell",
+        "command": "dart run intl_utils:generate",
+        "group": "build",
+        "problemMatcher": [],
+        "runOptions": {
+          "runOn": "folderOpen"
+        },
+        "options": {
+          "cwd": "${workspaceFolder}/shared/l10n"
+        }
+      }
+    ]
+  }
+  

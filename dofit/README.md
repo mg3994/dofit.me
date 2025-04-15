@@ -1,4 +1,11 @@
 # dofit
+```bash
+dart run intl_utils:generate
+```
+Or 
+<!-- ```markdown -->
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> then select **Tasks: Run Task** then select **Generate l10n Files**
+<!-- ``` -->
 
 A new Flutter project.
 

@@ -20,6 +20,16 @@ version: 1.0.0+1
 
 environment:
   sdk: ^3.7.2
+workspace:
+  - core
+  # - features/code_push
+  # - features/l10nr
+  # - features/themer
+  # - features/updater
+  - shared/components
+  - shared/l10n
+  - shared/packages
+  - shared/preferences
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
