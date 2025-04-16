@@ -1,5 +1,4 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'usecases/usecase.dart';
+export 'utils/utils.dart';
+// external
+export 'package:preferences/preferences.dart';

@@ -22,10 +22,11 @@ environment:
   sdk: ^3.7.2
 workspace:
   - core
-  # - features/code_push
-  # - features/l10nr
-  # - features/themer
-  # - features/updater
+  - features/code_push
+  - features/l10nr
+  - features/thememoder
+  - features/themer
+  - features/updater
   - shared/components
   - shared/l10n
   - shared/packages
