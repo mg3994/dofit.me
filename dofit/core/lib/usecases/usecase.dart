@@ -1,15 +1,17 @@
-import 'package:packages/packages.dart';
+import 'package:packages/packages.dart' show Either, Equatable;
 
 import '../errors/failures.dart';
 
-sealed class UseCase<Type, Params> {
+abstract  class UseCase<Type, Params> {
   const UseCase();
   Future<Either<Failure, Type>> call(Params params);
 }
 
-@Equatable()
-final class NoParams {
+final class NoParams extends Equatable {
   const NoParams();
+  
+  @override
+  List<Object?> get props => [];
 }
 
 //TODO Add Pagination

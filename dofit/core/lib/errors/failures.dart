@@ -93,11 +93,35 @@
 ///
 import 'package:packages/packages.dart' show Equatable;
 
+// abstract class Failure extends Equatable {
+//   final String message;
+  
+//   const Failure(this.message);
+  
+//   @override
+//   List<Object> get props => [message];
+// }
+
+// class CacheFailure extends Failure {
+//   const CacheFailure(super.message);
+// }
+
+// class ServerFailure extends Failure {
+//   const ServerFailure(super.message);
+// }
+
+enum FailureType { cache, network, server }
+
 abstract class Failure extends Equatable {
   final String message;
-  
-  const Failure(this.message);
-  
+  final FailureType type;
+
+  const Failure(this.message, this.type);
+
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, type];
+}
+
+class CacheFailure extends Failure {
+  const CacheFailure(String message) : super(message, FailureType.cache);
 }
