@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart' show ThemeMode;
+import 'package:flutter/material.dart';
 
-class ThemeModeEntity {
+final class ThemeModeEntity {
   final ThemeMode themeMode;
-  const ThemeModeEntity({required this.themeMode});
-  
+  const ThemeModeEntity({required this.themeMode, });
 }

@@ -1,19 +1,13 @@
-import 'package:thememoder/domain/entity/theme_mode_entity.dart';
+part of 'theme_mode_bloc.dart';
 
-enum ThemeModeStatus {
-  initial,loading,success,error
-  
-}
+@freezed
+sealed class ThemeModeState with _$ThemeModeState {
+  const ThemeModeState._(); // Private constructor for shared methods
+  //
+  const factory ThemeModeState.initial(ThemeModeEntity themeModeEntity) = _ThemeModeInitial;
+  const factory ThemeModeState.loaded( ThemeModeEntity themeModeEntity) = _ThemeModeLoaded;
+  const factory ThemeModeState.error(String message,  ThemeModeEntity themeModeEntity) =
+      _ThemeModeError;
 
-class ThemeModeState {
-  final ThemeModeStatus status;
-  final String? errorMessage;
-  final ThemeModeEntity? themeModeEntity;
-  const ThemeModeState._({
-    required this.status,
-    this.errorMessage,
-    this.themeModeEntity
-  });
-  factory ThemeModeState.initial()=> ThemeModeState._(status: ThemeModeStatus.initial);
-  ThemeModeState copyWith({ThemeModeStatus? status, String? errorMessage, ThemeModeEntity? themeModeEntity})=> ThemeModeState._(status: status ?? this.status,errorMessage: errorMessage ?? this.errorMessage,themeModeEntity: themeModeEntity??this.themeModeEntity);
+
 }

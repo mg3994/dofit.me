@@ -1,7 +1,8 @@
 import 'package:thememoder/domain/entity/theme_mode_entity.dart';
 
-abstract class ThemeModeRepository {
+abstract interface class ThemeModeRepository {
   const ThemeModeRepository();
   Future<ThemeModeEntity> getThemeMode();
-  Future<void> setThemeMode(ThemeModeEntity themeModeEntity);
+  Future<bool> setThemeMode(ThemeModeEntity themeModeEntity);
+   Future<bool> resetThemeMode();
 }

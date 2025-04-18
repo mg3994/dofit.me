@@ -1,3 +1,6 @@
+By Mistake Designed Bloc But It Should Be Cubit
+> for Just Core App Features Use Cubit , For Extreme Features Use Bloc
+
 <!--
 This README describes the package. If you publish this package to pub.dev,
 this README's contents appear on the landing page for your package.
