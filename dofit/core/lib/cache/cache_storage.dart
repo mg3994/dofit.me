@@ -1,8 +1,9 @@
-import 'package:core/cache/tables/theme_mode_table.dart';
+import 'package:core/cache/tables/tables.dart';
+
 import 'package:packages/packages.dart';
 part 'cache_storage.g.dart';
 
-@DriftDatabase(tables: [ThemeModeTable])
+@DriftDatabase(tables: [ThemeModeTable,ThemeFlexSchemeTable])
 class CacheStorage extends _$CacheStorage{
   // After generating code, this class needs to define a `schemaVersion` getter
   // and a constructor telling drift where the database should be stored.

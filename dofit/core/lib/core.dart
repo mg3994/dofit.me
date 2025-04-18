@@ -1,3 +1,6 @@
+export 'adaptor/adaptor.dart';
+
+
 export 'usecases/usecase.dart';
 export 'errors/errors.dart';
 export 'utils/utils.dart';

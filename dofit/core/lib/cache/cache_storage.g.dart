@@ -215,15 +215,241 @@ class ThemeModeTableCompanion extends UpdateCompanion<ThemeModeTableData> {
   }
 }
 
+class $ThemeFlexSchemeTableTable extends ThemeFlexSchemeTable
+    with TableInfo<$ThemeFlexSchemeTableTable, ThemeFlexSchemeTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ThemeFlexSchemeTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _flexSchemeIndexMeta = const VerificationMeta(
+    'flexSchemeIndex',
+  );
+  @override
+  late final GeneratedColumn<int> flexSchemeIndex = GeneratedColumn<int>(
+    'flex_scheme_index',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, flexSchemeIndex];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'theme_flex_scheme_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ThemeFlexSchemeTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('flex_scheme_index')) {
+      context.handle(
+        _flexSchemeIndexMeta,
+        flexSchemeIndex.isAcceptableOrUnknown(
+          data['flex_scheme_index']!,
+          _flexSchemeIndexMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_flexSchemeIndexMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ThemeFlexSchemeTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ThemeFlexSchemeTableData(
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      flexSchemeIndex:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}flex_scheme_index'],
+          )!,
+    );
+  }
+
+  @override
+  $ThemeFlexSchemeTableTable createAlias(String alias) {
+    return $ThemeFlexSchemeTableTable(attachedDatabase, alias);
+  }
+}
+
+class ThemeFlexSchemeTableData extends DataClass
+    implements Insertable<ThemeFlexSchemeTableData> {
+  final int id;
+  final int flexSchemeIndex;
+  const ThemeFlexSchemeTableData({
+    required this.id,
+    required this.flexSchemeIndex,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['flex_scheme_index'] = Variable<int>(flexSchemeIndex);
+    return map;
+  }
+
+  ThemeFlexSchemeTableCompanion toCompanion(bool nullToAbsent) {
+    return ThemeFlexSchemeTableCompanion(
+      id: Value(id),
+      flexSchemeIndex: Value(flexSchemeIndex),
+    );
+  }
+
+  factory ThemeFlexSchemeTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ThemeFlexSchemeTableData(
+      id: serializer.fromJson<int>(json['id']),
+      flexSchemeIndex: serializer.fromJson<int>(json['flexSchemeIndex']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'flexSchemeIndex': serializer.toJson<int>(flexSchemeIndex),
+    };
+  }
+
+  ThemeFlexSchemeTableData copyWith({int? id, int? flexSchemeIndex}) =>
+      ThemeFlexSchemeTableData(
+        id: id ?? this.id,
+        flexSchemeIndex: flexSchemeIndex ?? this.flexSchemeIndex,
+      );
+  ThemeFlexSchemeTableData copyWithCompanion(
+    ThemeFlexSchemeTableCompanion data,
+  ) {
+    return ThemeFlexSchemeTableData(
+      id: data.id.present ? data.id.value : this.id,
+      flexSchemeIndex:
+          data.flexSchemeIndex.present
+              ? data.flexSchemeIndex.value
+              : this.flexSchemeIndex,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ThemeFlexSchemeTableData(')
+          ..write('id: $id, ')
+          ..write('flexSchemeIndex: $flexSchemeIndex')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, flexSchemeIndex);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ThemeFlexSchemeTableData &&
+          other.id == this.id &&
+          other.flexSchemeIndex == this.flexSchemeIndex);
+}
+
+class ThemeFlexSchemeTableCompanion
+    extends UpdateCompanion<ThemeFlexSchemeTableData> {
+  final Value<int> id;
+  final Value<int> flexSchemeIndex;
+  const ThemeFlexSchemeTableCompanion({
+    this.id = const Value.absent(),
+    this.flexSchemeIndex = const Value.absent(),
+  });
+  ThemeFlexSchemeTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int flexSchemeIndex,
+  }) : flexSchemeIndex = Value(flexSchemeIndex);
+  static Insertable<ThemeFlexSchemeTableData> custom({
+    Expression<int>? id,
+    Expression<int>? flexSchemeIndex,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (flexSchemeIndex != null) 'flex_scheme_index': flexSchemeIndex,
+    });
+  }
+
+  ThemeFlexSchemeTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? flexSchemeIndex,
+  }) {
+    return ThemeFlexSchemeTableCompanion(
+      id: id ?? this.id,
+      flexSchemeIndex: flexSchemeIndex ?? this.flexSchemeIndex,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (flexSchemeIndex.present) {
+      map['flex_scheme_index'] = Variable<int>(flexSchemeIndex.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ThemeFlexSchemeTableCompanion(')
+          ..write('id: $id, ')
+          ..write('flexSchemeIndex: $flexSchemeIndex')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$CacheStorage extends GeneratedDatabase {
   _$CacheStorage(QueryExecutor e) : super(e);
   $CacheStorageManager get managers => $CacheStorageManager(this);
   late final $ThemeModeTableTable themeModeTable = $ThemeModeTableTable(this);
+  late final $ThemeFlexSchemeTableTable themeFlexSchemeTable =
+      $ThemeFlexSchemeTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [themeModeTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    themeModeTable,
+    themeFlexSchemeTable,
+  ];
 }
 
 typedef $$ThemeModeTableTableCreateCompanionBuilder =
@@ -386,10 +612,177 @@ typedef $$ThemeModeTableTableProcessedTableManager =
       ThemeModeTableData,
       PrefetchHooks Function()
     >;
+typedef $$ThemeFlexSchemeTableTableCreateCompanionBuilder =
+    ThemeFlexSchemeTableCompanion Function({
+      Value<int> id,
+      required int flexSchemeIndex,
+    });
+typedef $$ThemeFlexSchemeTableTableUpdateCompanionBuilder =
+    ThemeFlexSchemeTableCompanion Function({
+      Value<int> id,
+      Value<int> flexSchemeIndex,
+    });
+
+class $$ThemeFlexSchemeTableTableFilterComposer
+    extends Composer<_$CacheStorage, $ThemeFlexSchemeTableTable> {
+  $$ThemeFlexSchemeTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get flexSchemeIndex => $composableBuilder(
+    column: $table.flexSchemeIndex,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ThemeFlexSchemeTableTableOrderingComposer
+    extends Composer<_$CacheStorage, $ThemeFlexSchemeTableTable> {
+  $$ThemeFlexSchemeTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get flexSchemeIndex => $composableBuilder(
+    column: $table.flexSchemeIndex,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ThemeFlexSchemeTableTableAnnotationComposer
+    extends Composer<_$CacheStorage, $ThemeFlexSchemeTableTable> {
+  $$ThemeFlexSchemeTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get flexSchemeIndex => $composableBuilder(
+    column: $table.flexSchemeIndex,
+    builder: (column) => column,
+  );
+}
+
+class $$ThemeFlexSchemeTableTableTableManager
+    extends
+        RootTableManager<
+          _$CacheStorage,
+          $ThemeFlexSchemeTableTable,
+          ThemeFlexSchemeTableData,
+          $$ThemeFlexSchemeTableTableFilterComposer,
+          $$ThemeFlexSchemeTableTableOrderingComposer,
+          $$ThemeFlexSchemeTableTableAnnotationComposer,
+          $$ThemeFlexSchemeTableTableCreateCompanionBuilder,
+          $$ThemeFlexSchemeTableTableUpdateCompanionBuilder,
+          (
+            ThemeFlexSchemeTableData,
+            BaseReferences<
+              _$CacheStorage,
+              $ThemeFlexSchemeTableTable,
+              ThemeFlexSchemeTableData
+            >,
+          ),
+          ThemeFlexSchemeTableData,
+          PrefetchHooks Function()
+        > {
+  $$ThemeFlexSchemeTableTableTableManager(
+    _$CacheStorage db,
+    $ThemeFlexSchemeTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$ThemeFlexSchemeTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer:
+              () => $$ThemeFlexSchemeTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer:
+              () => $$ThemeFlexSchemeTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> flexSchemeIndex = const Value.absent(),
+              }) => ThemeFlexSchemeTableCompanion(
+                id: id,
+                flexSchemeIndex: flexSchemeIndex,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int flexSchemeIndex,
+              }) => ThemeFlexSchemeTableCompanion.insert(
+                id: id,
+                flexSchemeIndex: flexSchemeIndex,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ThemeFlexSchemeTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$CacheStorage,
+      $ThemeFlexSchemeTableTable,
+      ThemeFlexSchemeTableData,
+      $$ThemeFlexSchemeTableTableFilterComposer,
+      $$ThemeFlexSchemeTableTableOrderingComposer,
+      $$ThemeFlexSchemeTableTableAnnotationComposer,
+      $$ThemeFlexSchemeTableTableCreateCompanionBuilder,
+      $$ThemeFlexSchemeTableTableUpdateCompanionBuilder,
+      (
+        ThemeFlexSchemeTableData,
+        BaseReferences<
+          _$CacheStorage,
+          $ThemeFlexSchemeTableTable,
+          ThemeFlexSchemeTableData
+        >,
+      ),
+      ThemeFlexSchemeTableData,
+      PrefetchHooks Function()
+    >;
 
 class $CacheStorageManager {
   final _$CacheStorage _db;
   $CacheStorageManager(this._db);
   $$ThemeModeTableTableTableManager get themeModeTable =>
       $$ThemeModeTableTableTableManager(_db, _db.themeModeTable);
+  $$ThemeFlexSchemeTableTableTableManager get themeFlexSchemeTable =>
+      $$ThemeFlexSchemeTableTableTableManager(_db, _db.themeFlexSchemeTable);
 }
