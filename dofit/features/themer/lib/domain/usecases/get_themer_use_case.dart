@@ -5,10 +5,10 @@ import 'package:themer/domain/repositories/themer_repository.dart';
 class GetThemerUseCase extends UseCase<ThemerEntity,NoParams> {
   final ThemerRepository repository;
 
-  GetThemerUseCase({required this.repository});
+  const GetThemerUseCase({required this.repository});
   
   @override
-  Future<Either<Failure, ThemerEntity>> call(NoParams params)async {
+  Future<Either<Failure, ThemerEntity>> call(NoParams noParams)async {
     try {
       final themer = await repository.getThemer(); // returns ThemerEntity
       return Right(themer); // manually wrap

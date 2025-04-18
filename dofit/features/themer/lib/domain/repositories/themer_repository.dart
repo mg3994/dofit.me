@@ -2,6 +2,7 @@
 import 'package:themer/domain/entities/themer_entity.dart' show ThemerEntity;
 
 abstract interface class ThemerRepository {
+  const ThemerRepository();
   Future<ThemerEntity> getThemer();
   Future<bool> setThemer(ThemerEntity themerEntity);
 }
