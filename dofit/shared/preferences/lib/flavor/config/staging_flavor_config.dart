@@ -15,5 +15,5 @@ part of '../config.dart';
 final class _StagingFlavorConfig extends FlavorConfig {
   const _StagingFlavorConfig()
       : super._internal(
-            "[STG] DoFit", 'https://dofit.me', Flavor.staging,'AlOp7lBkcFRdJnXFkGcBHwM9I9TJMMgr',true);
+            "[STG] DoFit", 'https://www.dofit.me', Flavor.staging,'AlOp7lBkcFRdJnXFkGcBHwM9I9TJMMgr',true);
 }

@@ -4,14 +4,18 @@
 //   yield LicenseEntryWithLineBreaks(<String>['google_fonts'], license);
 // });
 
+import 'dart:io' as AppExitResponse show exit;
+
 import 'package:dofit/router/app_router.dart' show AppRouter;
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:components/components.dart';
+import 'package:flutter/services.dart' show SystemNavigator;
 // Features
 import 'package:thememoder/thememoder.dart';
 import 'package:themer/themer.dart';
 import 'package:l10nr/l10nr.dart';
+import 'dart:ui' as ui;
 
 void main() {
   runApp(const DoFitApp());
@@ -26,6 +30,7 @@ class DoFitApp extends StatefulWidget {
 
 class _DoFitAppState extends State<DoFitApp> {
   late final CacheStorage _cacheStorage;
+  bool _isMemoryDialogShown = false;
 
   @override
   void initState() {
@@ -125,29 +130,64 @@ class _DoFitAppState extends State<DoFitApp> {
           child: Builder(
             builder: (context) {
               return SystemEventObserver(
-                onMemoryPressure: () {
+                onAppExitRequest: () async {
+                  // You can keep this for desktop/web system exit events
                   final ctx = rootNavigatorKey.currentContext;
                   if (ctx != null) {
-                  showDialog(
-                    context: ctx,
-                    builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Low Memory Warning'),
-                      content: const Text(
-                      'Your device is running low on memory. This may cause the app to crash on low-memory devices. '
-                      'Please consider managing your phone storage to avoid potential issues.',
-                      ),
-                      actions: [
-                      TextButton(
-                        onPressed: () {
-                        Navigator.of(context).pop(); // Close dialog
-                        },
-                        child: const Text('OK'),
-                      ),
-                      ],
+                    final shouldExit = await showDialog<bool>(
+                      context: ctx,
+                      builder:
+                          (context) => AlertDialog(
+                            title: const Text('Exit App'),
+                            content: const Text(
+                              'Do you really want to exit the app?',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed:
+                                    () => Navigator.of(context).pop(false),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed:
+                                    () => Navigator.of(context).pop(true),
+                                child: const Text('Exit'),
+                              ),
+                            ],
+                          ),
                     );
-                    },
-                  );
+                    return shouldExit == true
+                        ? ui.AppExitResponse.exit
+                        : ui.AppExitResponse.cancel;
+                  }
+                  return ui.AppExitResponse.cancel;
+                },
+                onMemoryPressure: () {
+                  final ctx = rootNavigatorKey.currentContext;
+                  if (ctx != null && !_isMemoryDialogShown) {
+                    _isMemoryDialogShown = true; // Lock
+                    showDialog(
+                      context: ctx,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Low Memory Warning'),
+                          content: const Text(
+                            'Your device is running low on available memory (RAM). This may affect app performance or cause crashes on low-memory devices. '
+                            'Please consider closing unused apps or freeing up memory to avoid potential issues with this app.',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close dialog
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((_) {
+                      _isMemoryDialogShown = false; // Unlock after closed
+                    });
                   }
                 },
                 onSystemLocaleChange: (
@@ -197,50 +237,91 @@ class _DoFitAppState extends State<DoFitApp> {
                     }
                   }
                 },
-                child: MaterialApp.router(
-                  scrollBehavior:
-                      const AppScrollBehavior(), // or NoScrollbarBehavior(), AppleScrollBehavior()
-                  routerConfig: AppRouter.router,
-                  supportedLocales: AppLocalizationDelegate().supportedLocales,
-                  locale: context.watch<L10nrBloc>().state.l10nrEntity.locale,
-                  localizationsDelegates: [
-                    AppLocalizationDelegate(),
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  localeResolutionCallback: (locale, supportedLocales) {
-                    // Check if the locale is supported, otherwise fallback to the first supported locale
-                    if (locale != null && supportedLocales.contains(locale)) {
-                      return locale;
-                    }
-                    return supportedLocales.first;
-                  },
-                  localeListResolutionCallback: (locales, supportedLocales) {
-                    // Iterate through the list of locales and return the first match
-                    if (locales != null) {
-                      for (final locale in locales) {
-                        if (supportedLocales.contains(locale)) {
-                          return locale;
-                        }
+                child: PopScope(
+                  canPop: false, // prevent auto pop
+                  onPopInvokedWithResult: (bool didPop, dynamic result) {
+                    if (!didPop) {
+                      final ctx = rootNavigatorKey.currentContext;
+                      if (ctx != null) {
+                        // Defer async dialog
+                        Future.microtask(() async {
+                          final shouldExit = await showDialog<bool>(
+                            context: ctx,
+                            builder:
+                                (context) => AlertDialog(
+                                  title: const Text('Exit App'),
+                                  content: const Text(
+                                    'Do you really want to exit the app?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed:
+                                          () =>
+                                              Navigator.of(context).pop(false),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed:
+                                          () => Navigator.of(context).pop(true),
+                                      child: const Text('Exit'),
+                                    ),
+                                  ],
+                                ),
+                          );
+
+                          if (shouldExit == true) {
+                            SystemNavigator.pop();
+                          }
+                        });
                       }
                     }
-                    // Fallback to the first supported locale if no match is found
-                    return supportedLocales.first;
                   },
+                  child: MaterialApp.router(
+                    // scrollBehavior:
+                    //     const AppleScrollBehavior() ,//AppScrollBehavior(), // or NoScrollbarBehavior(), AppleScrollBehavior()
+                    routerConfig: AppRouter.router,
+                    supportedLocales:
+                        AppLocalizationDelegate().supportedLocales,
+                    locale: context.watch<L10nrBloc>().state.l10nrEntity.locale,
+                    localizationsDelegates: [
+                      AppLocalizationDelegate(),
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                    ],
+                    localeResolutionCallback: (locale, supportedLocales) {
+                      // Check if the locale is supported, otherwise fallback to the first supported locale
+                      if (locale != null && supportedLocales.contains(locale)) {
+                        return locale;
+                      }
+                      return supportedLocales.first;
+                    },
+                    localeListResolutionCallback: (locales, supportedLocales) {
+                      // Iterate through the list of locales and return the first match
+                      if (locales != null) {
+                        for (final locale in locales) {
+                          if (supportedLocales.contains(locale)) {
+                            return locale;
+                          }
+                        }
+                      }
+                      // Fallback to the first supported locale if no match is found
+                      return supportedLocales.first;
+                    },
 
-                  theme: appLightTheme(
-                    context.watch<ThemerBloc>().state.themerEntity.flexScheme,
+                    theme: appLightTheme(
+                      context.watch<ThemerBloc>().state.themerEntity.flexScheme,
+                    ),
+                    darkTheme: appDarkTheme(
+                      context.watch<ThemerBloc>().state.themerEntity.flexScheme,
+                    ),
+                    themeMode:
+                        context
+                            .watch<ThemeModeBloc>()
+                            .state
+                            .themeModeEntity
+                            .themeMode, // Get the current theme mode from the bloc
                   ),
-                  darkTheme: appDarkTheme(
-                    context.watch<ThemerBloc>().state.themerEntity.flexScheme,
-                  ),
-                  themeMode:
-                      context
-                          .watch<ThemeModeBloc>()
-                          .state
-                          .themeModeEntity
-                          .themeMode, // Get the current theme mode from the bloc
                 ),
               );
             },

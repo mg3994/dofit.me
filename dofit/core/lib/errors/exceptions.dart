@@ -1,4 +1,5 @@
 import 'package:packages/packages.dart' show Equatable;
+export 'exceptions/auth_exceptions.dart';
 
 // @Equatable(stringify: true) // stringify for above use case
 final class ServerException extends Equatable  implements Exception {

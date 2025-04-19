@@ -15,5 +15,5 @@ part of '../config.dart';
 final class _DevelopmentFlavorConfig extends FlavorConfig {
   const _DevelopmentFlavorConfig()
       : super._internal(
-            '[DEV] DoFit', 'https://dofit.me', Flavor.development,'AlOp7lBkcFRdJnXFkGcBHwM9I9TJMMgr',false);
+            '[DEV] DoFit', 'https://www.dofit.me', Flavor.development,'AlOp7lBkcFRdJnXFkGcBHwM9I9TJMMgr',false);
 }

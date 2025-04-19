@@ -11,7 +11,14 @@ export 'package:flex_color_scheme/flex_color_scheme.dart';
 
 export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 export 'package:drift_flutter/drift_flutter.dart';
-export 'package:drift/drift.dart' hide JsonKey;
+export 'package:drift/drift.dart' hide JsonKey, Column;
 export 'package:path_provider/path_provider.dart';
+
+
+export 'package:drift/native.dart';
+export 'package:path/path.dart';
+
+
+
 // external
 export 'package:l10n/l10n.dart';
