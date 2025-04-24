@@ -31333,3 +31333,27 @@ samples, guidance on mobile development, and a full API reference.
     }
 ]
 ```
+
+
+
+# IconData(0xe42f, fontFamily: 'MaterialIcons');
+<!-- abstract final class CupertinoIcons {
+  /// The icon font used for Cupertino icons.
+  static const String iconFont = 'CupertinoIcons';
+
+  /// The dependent package providing the Cupertino icons font.
+  static const String iconFontPackage = 'cupertino_icons';
+
+  // ===========================================================================
+  // BEGIN LEGACY PRE SF SYMBOLS NAMES
+  // We need to leave them as-is with the same codepoints for backward
+  // compatibility with cupertino_icons <0.1.3.
+
+  /// <i class='cupertino-icons md-36'>chevron_left</i> &#x2014; Cupertino icon for a thin left chevron.
+  /// This is the same icon as [chevron_left] in cupertino_icons 1.0.0+.
+  static const IconData left_chevron = IconData(
+    0xf3d2,
+    fontFamily: iconFont,
+    fontPackage: iconFontPackage,
+    matchTextDirection: true,
+  ); -->

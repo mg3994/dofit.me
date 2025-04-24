@@ -108,7 +108,7 @@ final class _SystemEventObserverState extends State<SystemEventObserver>
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) => SafeArea(child: widget.child);
 
   @override
   void dispose() {
