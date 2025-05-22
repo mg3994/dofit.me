@@ -8,8 +8,10 @@
  * Author URI: https://github.com/antinna
  * License:  GPL-2.0+
  * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       plugin-name
- * Domain Path:       /languages
+ * Text Domain:  app-custom-api
+ * Domain Path:  /languages
+ * Requires at least: 5.0
+ * Requires PHP:      7.2
  */
 
 // If this file is called directly, abort. app-custom-api App_Custom_Api , app_custom_api

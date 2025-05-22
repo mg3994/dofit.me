@@ -13,26 +13,63 @@ class BootstrapDofitApp extends StatefulWidget {
 }
 
 class _BootstrapDofitAppState extends State<BootstrapDofitApp> {
+  late final FlavorConfig _flavorConfig;
   late final CacheStorage _cacheStorage;
+  late final Connectivity _connectivity;
+  late final ApiClient _apiClient;
+  late final  ApiServices _apiServices;
+
+
+
+
+
 
   @override
   void initState() {
-    _cacheStorage = CacheStorage();
+    // defer first frame 
     // Edge to edge
-    // WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, );
+    // Init Variables
+    _cacheStorage = CacheStorage();
+    _flavorConfig = FlavorConfig();
+    _connectivity = Connectivity();
+    _apiClient = ApiClient(connectivity:_connectivity,cacheStorage:_cacheStorage, config:_flavorConfig);
+    _apiServices = ApiServices(_apiClient.dio);
+    // device info
+    // package info
+    
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
-        // overlays: [
-        //   SystemUiOverlay.bottom,
-        //   SystemUiOverlay.top,
-        // ]
-        );
+       
+       
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
      providers: [
+        RepositoryProvider<FlavorConfig>(
+          create:
+              (context) => _flavorConfig,
+        ),
+         RepositoryProvider<CacheStorage>(
+          create:
+              (context) => _cacheStorage,
+        ),
+         RepositoryProvider<Connectivity>(
+          create:
+              (context) => _connectivity,
+        ),
+        ////////
+         RepositoryProvider<ApiClient>(
+          create:
+              (context) => _apiClient,
+        ),
+        RepositoryProvider<ApiServices>(
+          create:
+              (context) => _apiServices,
+        ),
+        ////////
+      //////////////////////
         RepositoryProvider<ThemeModeRepository>(
           create:
               (context) => ThemeModeRepositoryImpl(
@@ -91,7 +128,10 @@ class _BootstrapDofitAppState extends State<BootstrapDofitApp> {
                 )..add(const L10nrEvent.getLocale()),
           ),
         ],
-        child:   DoFitApp()),
+        child:  
+        // if still loading defer initial frame else go on
+        
+         DoFitApp()),
       
     );
   }

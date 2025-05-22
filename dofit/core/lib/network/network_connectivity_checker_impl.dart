@@ -204,3 +204,25 @@
 //  // }
 // }
 
+class NetworkConnectivityChecker {
+  final Connectivity connectivity;
+  const NetworkConnectivityChecker({required this.connectivity,});
+
+  final connectivityResult = await connectivity.checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      await _waitForConnectivity();
+    }
+
+
+      // Wait until connectivity is available
+  Future<void> _waitForConnectivity() async {
+    final completer = Completer<void>();
+    final subscription = connectivity.onConnectivityChanged.listen((result) {
+      if (result != ConnectivityResult.none) {
+        completer.complete();
+      }
+    });
+    await completer.future;
+    await subscription.cancel();
+  }
+}

@@ -87,9 +87,9 @@ class App_Custom_Api {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - App_Custom_Api_Loader. Orchestrates the hooks of the plugin.
-	 * - Plugin_Name_i18n. Defines internationalization functionality.
-	 * - Plugin_Name_Admin. Defines all hooks for the admin area.
-	 * - Plugin_Name_Public. Defines all hooks for the public side of the site.
+	 * - App_Custom_Api_i18n. Defines internationalization functionality.
+	 * - App_Custom_Api_Admin. Defines all hooks for the admin area.
+	 * - App_Custom_Api_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -129,7 +129,7 @@ class App_Custom_Api {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Plugin_Name_i18n class in order to set the domain and to register the hook
+	 * Uses the App_Custom_Api_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -199,7 +199,7 @@ class App_Custom_Api {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Plugin_Name_Loader    Orchestrates the hooks of the plugin.
+	 * @return    App_Custom_Api_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

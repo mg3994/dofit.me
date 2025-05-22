@@ -358,3 +358,16 @@
 //   }
 // }
 //
+
+
+
+import 'package:core/core.dart' show Dio, GET, Path, RestApi;
+
+//  to use serializable Api Resonse
+@RestApi()
+abstract class ApiServices {
+  factory ApiServices(Dio dio, {String? baseUrl}) = _ApiServices;
+
+  @GET("/users/{id}")
+  Future<ApiResponse<UserModel>> getUser(@Path("id") String id);
+}

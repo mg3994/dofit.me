@@ -14,7 +14,7 @@ import 'package:components/components.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
-
+// on did change allow first frame also do precatch assets
 class DoFitApp extends StatelessWidget {
   const DoFitApp({super.key});
 
@@ -26,10 +26,11 @@ class DoFitApp extends StatelessWidget {
       // scrollBehavior:
       //     const AppleScrollBehavior() ,//AppScrollBehavior(), // or NoScrollbarBehavior(), AppleScrollBehavior()
       routerConfig: AppRouter.router,
-      supportedLocales: AppLocalizationDelegate().supportedLocales,
+      supportedLocales: S.delegate.supportedLocales,
       locale: context.watch<L10nrBloc>().state.l10nrEntity.locale,
       localizationsDelegates: [
-        AppLocalizationDelegate(),
+        S.delegate,
+        // AppLocalizationDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -98,7 +99,7 @@ class DoFitApp extends StatelessWidget {
           ],
           child: AnnotatedRegion(
             value:  SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
+              statusBarColor: Colors.transparent, //TODO Change
               systemNavigationBarColor: Colors.transparent,
               // systemNavigationBarIconBrightness:Theme.of(context).brightness == Brightness.dark? Brightness.dark: Brightness.light,
               // statusBarIconBrightness: Theme.of(context).brightness == Brightness.dark? Brightness.dark:Brightness.light,

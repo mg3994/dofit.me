@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
 import 'package:packages/packages.dart';
 import 'package:preferences/themes/theme_extensions.dart' show BrandTheme, darkBrandTheme, lightBrandTheme;
@@ -20,8 +21,33 @@ ThemeData appDarkTheme(FlexScheme flexScheme) => _appTheme(flexScheme:flexScheme
 
 ThemeData _appTheme({required FlexScheme flexScheme, required bool isDarkThemeMode, useM3= true}) {
   final baseTheme = isDarkThemeMode
-      ? FlexThemeData.dark(useMaterial3: useM3, scheme:flexScheme)
-      : FlexThemeData.light(useMaterial3: useM3, scheme:flexScheme);
+      ? FlexThemeData.dark(useMaterial3: useM3, scheme:flexScheme,  // Component theme configurations for dark mode.
+    subThemesData: const FlexSubThemesData(
+      interactionEffects: true,
+      tintedDisabledControls: true,
+      blendOnColors: true,
+      useM2StyleDividerInM3: true,
+      inputDecoratorIsFilled: true,
+      inputDecoratorBorderType: FlexInputBorderType.outline,
+      alignedDropdown: true,
+      navigationRailUseIndicator: true,
+    ),
+    // Direct ThemeData properties.
+    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),)
+      : FlexThemeData.light(useMaterial3: useM3, scheme:flexScheme, // Component theme configurations for light mode.
+    subThemesData: const FlexSubThemesData(
+      interactionEffects: true,
+      tintedDisabledControls: true,
+      useM2StyleDividerInM3: true,
+      inputDecoratorIsFilled: true,
+      inputDecoratorBorderType: FlexInputBorderType.outline,
+      alignedDropdown: true,
+      navigationRailUseIndicator: true,
+    ),
+    // Direct ThemeData properties.
+    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),);
   return baseTheme.copyWith(
     // brightness: isDarkThemeMode ? Brightness.dark : Brightness.light, // Only this thing seprates out the light and dark above
     // colorScheme: ColorScheme.fromSeed(flexScheme: flexScheme),
